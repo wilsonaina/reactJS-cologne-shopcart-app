@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import Product from "../product/product";
+import Product from "../product/Product";
 import {COLOGNE_PRODUCTS_MEN} from "../../data/CologneProducts";
 import {COLOGNE_PRODUCTS_WOMEN} from "../../data/CologneProducts";
 import {CologneSectionContext} from "../../store/cologne-section-context";

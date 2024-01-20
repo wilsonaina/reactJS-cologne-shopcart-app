@@ -1,7 +1,9 @@
 # Cologne Shopcart React App
 
 ![cologne_shop_react_app1.png](src%2Fassets%2Fcologne_shop_react_app1.png)
+
 ![cologne_shop_react_app2.png](src%2Fassets%2Fcologne_shop_react_app2.png)
+
 ![cologne_shop_react_app3.png](src%2Fassets%2Fcologne_shop_react_app3.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
