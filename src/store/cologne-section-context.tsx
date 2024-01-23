@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useReducer, useState} from "react";
 import {CologneGroupModel, ModalProductDetails} from "../model/cologne-product-model";
 
 export const CologneSectionContext = createContext<CologneGroupModel>({
@@ -11,7 +11,7 @@ export const CologneSectionContext = createContext<CologneGroupModel>({
     modalActive: false,
     cartModalActive: false,
     closeModal: () => {},
-    addProductToCart: (val) => {},
+    addProductToCart: (val: ModalProductDetails) => {},
     shoppingCart: [],
     modalProductDetails: {
         id: 0,
@@ -22,7 +22,22 @@ export const CologneSectionContext = createContext<CologneGroupModel>({
     }
 });
 
+function shoppingCartReducer(state: any, action: any) {
+    // console.log(`Items added: ${JSON.stringify(action.product)}`);
+    if (action.type === 'ADD_ITEM') {
+        const itemsInCurrentCart: any[] = [...state.shoppingCart];
+        itemsInCurrentCart.push(action.payload);
+
+        return {
+            shoppingCart: itemsInCurrentCart,
+        }
+    }
+
+    return state;
+}
+
 export default function CologneSectionProvider({children}: { children: any }) {
+    const [shoppingCartState, shoppingCartDispatch ] = useReducer(shoppingCartReducer, {shoppingCart: [],})
     const [mensActiveTab, setMensActiveTab] = useState(true);
     const [womensActiveTab, setWomensActiveTab] = useState(false);
     const [modalActive, setModalActive] = useState(false);
@@ -34,7 +49,6 @@ export default function CologneSectionProvider({children}: { children: any }) {
         image: '',
         description: ''
     });
-    const [shoppingCart, setShoppingCart] = useState<any>({ shoppingCart: [], });
 
     function mensTab() {
         setMensActiveTab(true);
@@ -61,13 +75,9 @@ export default function CologneSectionProvider({children}: { children: any }) {
     }
 
     function addProductToCart(product: any) {
-        setShoppingCart((prevShoppingCart: any) => {
-            const itemsInCurrentCart: any[] = [...prevShoppingCart.shoppingCart];
-            itemsInCurrentCart.push(product);
-
-            return {
-                shoppingCart: itemsInCurrentCart,
-            }
+        shoppingCartDispatch({
+            type: 'ADD_ITEM',
+            payload: product
         });
     }
 
@@ -83,7 +93,7 @@ export default function CologneSectionProvider({children}: { children: any }) {
         closeModal: closeModal,
         modalProductDetails: modalProductDetails,
         addProductToCart: addProductToCart,
-        shoppingCart: shoppingCart.shoppingCart
+        shoppingCart: shoppingCartState.shoppingCart
     }
 
     return (

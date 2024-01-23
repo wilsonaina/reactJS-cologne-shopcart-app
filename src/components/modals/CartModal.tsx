@@ -32,7 +32,9 @@ export default function CartModal() {
             <h2 className='text-xl underline font-bold'>Cart items</h2>
             <div className='modal-content content-center mt-8'>
                 <ul className='list-none'>
-                    {shoppingCart.map((item: any) => (
+                    {!shoppingCart.length ?
+                        <h3>No items in cart.</h3>
+                        : shoppingCart.map((item: any) => (
                         <li key={item.id} className='max-h-24 grid grid-cols-1 mb-8'>
                             <div className='flex flex-row'>
                                 <div className='cart-img w-16'>
